@@ -1,0 +1,19 @@
+metaBMA 0.3.8
+===========
+
+* Data sets 'power_pose' and 'power_pose_unfamiliar' added
+* Data set 'facial_feedback' added
+* More informative description file
+* Requirements for CRAN
+
+
+metaBMA 0.3.0
+===========
+
+* First stable version
+* High-level functions meta_bma() and meta_default() perform model averaging for standard models (fixed, random + H0, H1)
+* Plotting functions for averaged/random-effects/fixed-effects meta-analysis via plot_forest() and plot_posterior()
+* Meta-analysis models are fitted by meta_fixed() and meta_random()
+* Effect estimates of fitted meta-analysis models can be averaged by bma()
+* Inclusion Bayes factor are computed by inclusion()
+* User-specified and default prior functions are specified via prior() [can be plottet via plot(prior)]
