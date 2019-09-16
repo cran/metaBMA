@@ -7,8 +7,8 @@
 meta_ordered(y, SE, labels, data, d = prior("norm", c(mean = 0, sd =
   0.3), lower = 0), tau = prior("invgamma", c(shape = 1, scale = 0.15)),
   prior = c(1, 1, 1, 1), logml = "integrate", summarize = "stan",
-  ci = 0.95, rel.tol = .Machine$double.eps^0.3, silent_stan = TRUE,
-  ...)
+  ci = 0.95, rel.tol = .Machine$double.eps^0.3, logml_iter = 5000,
+  iter = 5000, silent_stan = TRUE, ...)
 }
 \arguments{
 \item{y}{effect size per study. Can be provided as (1) a numeric vector, (2)
@@ -26,11 +26,11 @@ character vector or the quoted or unquoted name of the variable in
 \item{data}{data frame containing the variables for effect size \code{y},
 standard error \code{SE}, \code{labels}, and moderators per study.}
 
-\item{d}{\code{prior} distribution on the average effect size \eqn{d}. The
+\item{d}{\code{prior} distribution on the average effect size \code{d}. The
 prior probability density function is defined via \code{\link{prior}}.}
 
 \item{tau}{\code{prior} distribution on the between-study heterogeneity
-\eqn{\tau} (i.e., the standard deviation of the study effect sizes
+\code{tau} (i.e., the standard deviation of the study effect sizes
 \code{dstudy} in a random-effects meta-analysis. A (nonnegative) prior
 probability density function is defined via \code{\link{prior}}.}
 
@@ -41,7 +41,7 @@ model \code{random_H0} is not included in the comparison.}
 \item{logml}{how to estimate the log-marginal likelihood: either by numerical
 integration (\code{"integrate"}) or by bridge sampling using MCMC/Stan
 samples (\code{"stan"}). To obtain high precision with \code{logml="stan"},
-many MCMC samples are required (e.g., \code{iter=10000, warmup=1000}).}
+many MCMC samples are required (e.g., \code{logml_iter=10000, warmup=1000}).}
 
 \item{summarize}{how to estimate parameter summaries (mean, median, SD,
 etc.): Either by numerical integration (\code{summarize = "integrate"}) or
@@ -53,11 +53,28 @@ based on MCMC/Stan samples (\code{summarize = "stan"}).}
 \code{\link[stats]{integrate}}. Use \code{rel.tol=.Machine$double.eps} for
 maximal precision (however, this might be slow).}
 
+\item{logml_iter}{number of iterations (per chain) from the posterior
+distribution of \code{d} and \code{tau}. The samples are used for computing
+the marginal likelihood of the random-effects model with bridge sampling
+(if \code{logml="stan"}) and for obtaining parameter estimates (if
+\code{summarize="stan"}). Note that the argument \code{iter=2000} controls
+the number of iterations for estimation of the random-effect parameters per
+study in random-effects meta-analysis.}
+
+\item{iter}{number of MCMC iterations for the random-effects meta-analysis.
+Needs to be larger than usual to estimate the probability of all random
+effects being ordered (i.e., positive or negative).}
+
 \item{silent_stan}{whether to suppress the Stan progress bar.}
 
 \item{...}{further arguments passed to \code{rstan::sampling} (see
-\code{\link[rstan]{stanmodel-method-sampling}}). For instance:
-\code{warmup=500}, \code{chains=4}, \code{control=list(adapt_delta=.95)}).}
+\code{\link[rstan]{stanmodel-method-sampling}}). Relevant MCMC settings
+concern the number of warmup samples that are discarded
+(\code{warmup=500}), the total number of iterations per chain
+(\code{iter=2000}), the number of MCMC chains (\code{chains=4}), whether
+multiple cores should be used (\code{cores=4}), and control arguments that
+make the sampling in Stan more robust, for instance:
+\code{control=list(adapt_delta=.97)}.}
 }
 \description{
 Computes the Bayes factor for the hypothesis that the true study effects in a
@@ -67,19 +84,24 @@ random-effects meta-anaysis are all positive or negative.
 Usually, in random-effects meta-analysis,the study-specific random-effects
 are allowed to be both negative or positive even when the prior on the
 overall effect size \code{d} is truncated to be positive). In contrast, the
-function \code{meta_ordered} tests a model in which the random effects are
-forced to be either all positive or all negative. The direction of the
-study-specific random-effects is defined via the prior on \code{d}. For
-instance, \code{d=prior("norm", c(0,.5), lower=0)} means that all
-random-effects are positive (not just the overall mean effect size).
+function \code{meta_ordered} fits and tests a model in which the random
+effects are forced to be either all positive or all negative. The direction
+of the study-specific random-effects is defined via the prior on the mode of
+the truncated normal distribution \code{d}. For instance,
+\code{d=prior("norm", c(0,.5), lower=0)} means that all random-effects are
+positive (not just the overall mean effect size).
+
+The posterior summary statistics of the overall effect size in the model
+\code{ordered} refer to the the \emph{average/mean} of the study-specific
+effect sizes (as implied by the fitted truncated normal distribution) and
+\emph{not} to the location parameter \code{d} of the truncated normal
+distribution (which is only the mode, not the expected value of a truncated
+normal distribution).
 
 The Bayes factor for the order-constrained model is computed using the
 encompassing Bayes factor. Since many posterior samples are required for this
 approach, the default number of MCMC iterations for \code{meta_ordered} is
-\code{iter=10000} per chain. The posterior summary statistics for the model
-\code{ordered} refer to the overall effect size (i.e., the expected value of
-the truncated normal distribution) and not to the location parameter \code{d}
-(which is not the expected value of a truncated normal).
+\code{iter=5000} per chain.
 }
 \examples{
 ### Bayesian Meta-Analysis with Order Constraints
@@ -90,7 +112,7 @@ data(towels)
 set.seed(123)
 mo <- meta_ordered(logOR, SE, study, towels,
                    d = prior("norm", c(mean=0, sd=.3), lower=0),
-                   rel.tol=.Machine$double.eps^.15, iter=2000)
+                   rel.tol=.01, iter=1000)
 mo
 plot_posterior(mo)
 }

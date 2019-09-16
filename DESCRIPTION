@@ -1,10 +1,11 @@
 Package: metaBMA
 Type: Package
-Date: 2019-07-10
+Date: 2019-09-01
 Title: Bayesian Model Averaging for Random and Fixed Effects
         Meta-Analysis
-Version: 0.6.1
-Authors@R: c(person("Daniel W.","Heck",email="heck@uni-mannheim.de",role=c("aut","cre")),
+Version: 0.6.2
+Authors@R: c(person("Daniel W.", "Heck", email="heck@uni-mannheim.de", role=c("aut","cre"),
+                    comment = c(ORCID = "0000-0002-6302-9252")),
              person("Quentin F.", "Gronau", email="quentingronau@web.de", role = c("ctb")))
 Maintainer: Daniel W. Heck <heck@uni-mannheim.de>
 Description: Computes the posterior model probabilities for standard meta-analysis models 
@@ -33,8 +34,8 @@ LazyData: true
 NeedsCompilation: yes
 SystemRequirements: GNU make
 RoxygenNote: 6.1.1
-Packaged: 2019-07-09 22:14:42 UTC; Daniel
-Author: Daniel W. Heck [aut, cre],
+Packaged: 2019-09-16 13:53:49 UTC; Daniel
+Author: Daniel W. Heck [aut, cre] (<https://orcid.org/0000-0002-6302-9252>),
   Quentin F. Gronau [ctb]
 Repository: CRAN
-Date/Publication: 2019-07-10 07:50:03 UTC
+Date/Publication: 2019-09-16 15:40:05 UTC
