@@ -4,12 +4,25 @@
 \alias{meta_bma}
 \title{Model Averaging for Meta-Analysis}
 \usage{
-meta_bma(y, SE, labels, data, d = prior("norm", c(mean = 0, sd = 0.3)),
+meta_bma(
+  y,
+  SE,
+  labels,
+  data,
+  d = prior("norm", c(mean = 0, sd = 0.3)),
   tau = prior("invgamma", c(shape = 1, scale = 0.15)),
-  rscale_contin = 1/2, rscale_discrete = sqrt(2)/2, centering = TRUE,
-  prior = c(1, 1, 1, 1), logml = "integrate", summarize = "stan",
-  ci = 0.95, rel.tol = .Machine$double.eps^0.3, logml_iter = 5000,
-  silent_stan = TRUE, ...)
+  rscale_contin = 1/2,
+  rscale_discrete = sqrt(2)/2,
+  centering = TRUE,
+  prior = c(1, 1, 1, 1),
+  logml = "integrate",
+  summarize = "stan",
+  ci = 0.95,
+  rel.tol = .Machine$double.eps^0.3,
+  logml_iter = 5000,
+  silent_stan = TRUE,
+  ...
+)
 }
 \arguments{
 \item{y}{effect size per study. Can be provided as (1) a numeric vector, (2)
@@ -89,6 +102,8 @@ averaging for H1 (d != 0) vs. H0 (d = 0).
 \details{
 Bayesian model averaging for four meta-analysis models: Fixed- vs.
 random-effects and H0 (\eqn{d=0}) vs. H1 (e.g., \eqn{d>0}).
+For a primer on Bayesian model-averaged meta-analysis,
+see Gronau, Heck, Berkhout, Haaf, and Wagenmakers (2020).
 
 
 By default, the log-marginal likelihood is computed by numerical integration
@@ -120,6 +135,8 @@ plot_posterior(mb, "d")
 }
 \references{
 Gronau, Q. F., Erp, S. V., Heck, D. W., Cesario, J., Jonas, K. J., & Wagenmakers, E.-J. (2017). A Bayesian model-averaged meta-analysis of the power pose effect with informed and default priors: the case of felt power. Comprehensive Results in Social Psychology, 2(1), 123-138. \url{https://doi.org/10.1080/23743603.2017.1326760}
+
+Gronau, Q. F., Heck, D. W., Berkhout, S. W., Haaf, J. M., & Wagenmakers, E.-J. (2020). A primer on Bayesian model-averaged meta-analysis. \url{https://doi.org/10.31234/osf.io/97qup}
 }
 \seealso{
 \link{meta_fixed}, \link{meta_random}
