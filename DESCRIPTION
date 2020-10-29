@@ -1,9 +1,9 @@
 Package: metaBMA
 Type: Package
-Date: 2020-05-30
+Date: 2020-10-27
 Title: Bayesian Model Averaging for Random and Fixed Effects
         Meta-Analysis
-Version: 0.6.3
+Version: 0.6.5
 Authors@R: c(person("Daniel W.", "Heck", email="dheck@uni-marburg.de", role=c("aut","cre"),
                     comment = c(ORCID = "0000-0002-6302-9252")),
              person("Quentin F.", "Gronau", email="quentingronau@web.de", role = c("ctb")),
@@ -24,7 +24,7 @@ Description: Computes the posterior model probabilities for standard meta-analys
 Depends: R (>= 3.4.0), Rcpp (>= 1.0.0), methods
 Imports: mvtnorm, logspline, coda, LaplacesDemon, rstan (>= 2.18.1),
         rstantools (>= 1.5.1), bridgesampling
-Suggests: testthat, knitr
+Suggests: testthat, knitr, rmarkdown
 LinkingTo: BH (>= 1.69.0-1), Rcpp (>= 1.0.0), RcppEigen (>= 0.3.3.5.0),
         rstan (>= 2.18.1), StanHeaders (>= 2.18.0)
 VignetteBuilder: knitr
@@ -34,11 +34,11 @@ Encoding: UTF-8
 LazyData: true
 NeedsCompilation: yes
 SystemRequirements: GNU make
-RoxygenNote: 7.1.0
-Packaged: 2020-06-01 19:57:25 UTC; daniel
+RoxygenNote: 7.1.1
+Packaged: 2020-10-27 21:30:09 UTC; daniel
 Author: Daniel W. Heck [aut, cre] (<https://orcid.org/0000-0002-6302-9252>),
   Quentin F. Gronau [ctb],
   Eric-Jan Wagenmakers [ctb]
 Maintainer: Daniel W. Heck <dheck@uni-marburg.de>
 Repository: CRAN
-Date/Publication: 2020-06-02 08:40:02 UTC
+Date/Publication: 2020-10-29 08:50:02 UTC
