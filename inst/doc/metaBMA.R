@@ -30,9 +30,10 @@ plot_posterior(mf)
 progres <- capture.output(  # suppress Stan progress for vignette
   mr <- meta_random(logOR, SE, study, towels,
                     d = prior("norm", c(mean=0, sd=.3), lower=0),
-                    tau = prior("t", c(location=0, scale=.3, nu=1), lower=0))
+                    tau = prior("t", c(location=0, scale=.3, nu=1), lower=0),
+                    iter = 1500, logml_iter = 2000, rel.tol = .1)
 )
-mr
+mr  
 
 # plot posterior distribution
 plot_posterior(mr, main = "Average effect size d")
@@ -41,7 +42,8 @@ plot_posterior(mr, "tau", main = "Heterogeneity tau")
 ## ---- fig.height=4.5, fig.width=6---------------------------------------------
 mb <- meta_bma(logOR, SE, study, towels,
                d = prior("norm", c(mean=0, sd=.3), lower=0),
-               tau = prior("t", c(location=0, scale=.3, nu=1), lower=0))
+               tau = prior("t", c(location=0, scale=.3, nu=1), lower=0),
+                    iter = 1500, logml_iter = 2000, rel.tol = .1)
 mb
 plot_posterior(mb, "d", -.1, 1.4)
 plot_forest(mb)
