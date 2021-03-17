@@ -51,17 +51,17 @@ stan::io::program_reader prog_reader__() {
     reader.add_event(31, 10, "restart", "model_random_H0");
     reader.add_event(31, 10, "include", "/prior/tau_trunc.stan");
     reader.add_event(31, 0, "start", "/prior/tau_trunc.stan");
-    reader.add_event(43, 12, "end", "/prior/tau_trunc.stan");
-    reader.add_event(43, 11, "restart", "model_random_H0");
-    reader.add_event(46, 14, "include", "/prior/tau_param.stan");
-    reader.add_event(46, 0, "start", "/prior/tau_param.stan");
-    reader.add_event(47, 1, "end", "/prior/tau_param.stan");
-    reader.add_event(47, 15, "restart", "model_random_H0");
-    reader.add_event(50, 18, "include", "/prior/tau_target.stan");
-    reader.add_event(50, 0, "start", "/prior/tau_target.stan");
-    reader.add_event(60, 10, "end", "/prior/tau_target.stan");
-    reader.add_event(60, 19, "restart", "model_random_H0");
-    reader.add_event(64, 21, "end", "model_random_H0");
+    reader.add_event(71, 40, "end", "/prior/tau_trunc.stan");
+    reader.add_event(71, 11, "restart", "model_random_H0");
+    reader.add_event(74, 14, "include", "/prior/tau_param.stan");
+    reader.add_event(74, 0, "start", "/prior/tau_param.stan");
+    reader.add_event(75, 1, "end", "/prior/tau_param.stan");
+    reader.add_event(75, 15, "restart", "model_random_H0");
+    reader.add_event(78, 18, "include", "/prior/tau_target.stan");
+    reader.add_event(78, 0, "start", "/prior/tau_target.stan");
+    reader.add_event(91, 13, "end", "/prior/tau_target.stan");
+    reader.add_event(91, 19, "restart", "model_random_H0");
+    reader.add_event(95, 21, "end", "model_random_H0");
     return reader;
 }
 #include <stan_meta_header.hpp>
@@ -183,25 +183,58 @@ public:
                                 "assigning variable SE2");
                 }
             }
-            current_statement_begin__ = 32;
+            current_statement_begin__ = 33;
             if (as_bool(logical_eq(tau_family, 1))) {
-                current_statement_begin__ = 33;
-                stan::math::assign(tau_const, -(log_diff_exp(normal_cdf_log(get_base1(tau_bnd, 2, "tau_bnd", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)), normal_cdf_log(get_base1(tau_bnd, 1, "tau_bnd", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)))));
+                current_statement_begin__ = 34;
+                if (as_bool((primitive_value(is_inf(get_base1(tau_bnd, 1, "tau_bnd", 1))) && primitive_value(is_inf(get_base1(tau_bnd, 2, "tau_bnd", 1)))))) {
+                    current_statement_begin__ = 35;
+                    stan::math::assign(tau_const, 0);
+                } else {
+                    current_statement_begin__ = 37;
+                    stan::math::assign(tau_const, -(log_diff_exp(normal_cdf_log(get_base1(tau_bnd, 2, "tau_bnd", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)), normal_cdf_log(get_base1(tau_bnd, 1, "tau_bnd", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)))));
+                }
             } else if (as_bool(logical_eq(tau_family, 2))) {
-                current_statement_begin__ = 36;
-                stan::math::assign(tau_const, -(log_diff_exp(student_t_cdf_log(get_base1(tau_bnd, 2, "tau_bnd", 1), get_base1(tau_param, 3, "tau_param", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)), student_t_cdf_log(get_base1(tau_bnd, 1, "tau_bnd", 1), get_base1(tau_param, 3, "tau_param", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)))));
+                current_statement_begin__ = 42;
+                if (as_bool((primitive_value(is_inf(get_base1(tau_bnd, 1, "tau_bnd", 1))) && primitive_value(is_inf(get_base1(tau_bnd, 2, "tau_bnd", 1)))))) {
+                    current_statement_begin__ = 43;
+                    stan::math::assign(tau_const, 0);
+                } else {
+                    current_statement_begin__ = 45;
+                    stan::math::assign(tau_const, -(log_diff_exp(student_t_cdf_log(get_base1(tau_bnd, 2, "tau_bnd", 1), get_base1(tau_param, 3, "tau_param", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)), student_t_cdf_log(get_base1(tau_bnd, 1, "tau_bnd", 1), get_base1(tau_param, 3, "tau_param", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)))));
+                }
             } else if (as_bool(logical_eq(tau_family, 3))) {
-                current_statement_begin__ = 39;
-                stan::math::assign(tau_const, -(stan::math::log((get_base1(tau_bnd, 2, "tau_bnd", 1) - get_base1(tau_bnd, 1, "tau_bnd", 1)))));
+                current_statement_begin__ = 50;
+                if (as_bool((primitive_value(logical_eq(get_base1(tau_bnd, 1, "tau_bnd", 1), 0)) && primitive_value(logical_eq(get_base1(tau_bnd, 2, "tau_bnd", 1), 1))))) {
+                    current_statement_begin__ = 51;
+                    stan::math::assign(tau_const, 0);
+                } else {
+                    current_statement_begin__ = 53;
+                    stan::math::assign(tau_const, -(stan::math::log((get_base1(tau_bnd, 2, "tau_bnd", 1) - get_base1(tau_bnd, 1, "tau_bnd", 1)))));
+                }
             } else if (as_bool(logical_eq(tau_family, 4))) {
-                current_statement_begin__ = 41;
-                stan::math::assign(tau_const, -(log_diff_exp(inv_gamma_cdf_log(get_base1(tau_bnd, 2, "tau_bnd", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)), inv_gamma_cdf_log(get_base1(tau_bnd, 1, "tau_bnd", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)))));
+                current_statement_begin__ = 57;
+                if (as_bool((primitive_value(logical_eq(get_base1(tau_bnd, 1, "tau_bnd", 1), 0)) && primitive_value(is_inf(get_base1(tau_bnd, 2, "tau_bnd", 1)))))) {
+                    current_statement_begin__ = 58;
+                    stan::math::assign(tau_const, 0);
+                } else {
+                    current_statement_begin__ = 60;
+                    stan::math::assign(tau_const, -(log_diff_exp(inv_gamma_cdf_log(get_base1(tau_bnd, 2, "tau_bnd", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)), inv_gamma_cdf_log(get_base1(tau_bnd, 1, "tau_bnd", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)))));
+                }
+            } else if (as_bool(logical_eq(tau_family, 5))) {
+                current_statement_begin__ = 65;
+                if (as_bool((primitive_value(logical_eq(get_base1(tau_bnd, 1, "tau_bnd", 1), 0)) && primitive_value(is_inf(get_base1(tau_bnd, 2, "tau_bnd", 1)))))) {
+                    current_statement_begin__ = 66;
+                    stan::math::assign(tau_const, 0);
+                } else {
+                    current_statement_begin__ = 68;
+                    stan::math::assign(tau_const, -(log_diff_exp(gamma_cdf_log(get_base1(tau_bnd, 2, "tau_bnd", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)), gamma_cdf_log(get_base1(tau_bnd, 1, "tau_bnd", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)))));
+                }
             }
             // validate transformed data
             // validate, set parameter ranges
             num_params_r__ = 0U;
             param_ranges_i__.clear();
-            current_statement_begin__ = 47;
+            current_statement_begin__ = 75;
             num_params_r__ += 1;
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
@@ -220,7 +253,7 @@ public:
         (void) pos__; // dummy call to supress warning
         std::vector<double> vals_r__;
         std::vector<int> vals_i__;
-        current_statement_begin__ = 47;
+        current_statement_begin__ = 75;
         if (!(context__.contains_r("tau")))
             stan::lang::rethrow_located(std::runtime_error(std::string("Variable tau missing")), current_statement_begin__, prog_reader__());
         vals_r__ = context__.vals_r("tau");
@@ -258,7 +291,7 @@ public:
         try {
             stan::io::reader<local_scalar_t__> in__(params_r__, params_i__);
             // model parameters
-            current_statement_begin__ = 47;
+            current_statement_begin__ = 75;
             local_scalar_t__ tau;
             (void) tau;  // dummy to suppress unused var warning
             if (jacobian__)
@@ -266,23 +299,26 @@ public:
             else
                 tau = in__.scalar_lub_constrain(get_base1(tau_bnd, 1, "tau_bnd", 1), get_base1(tau_bnd, 2, "tau_bnd", 1));
             // model body
-            current_statement_begin__ = 51;
+            current_statement_begin__ = 79;
             lp_accum__.add(tau_const);
-            current_statement_begin__ = 52;
+            current_statement_begin__ = 80;
             if (as_bool(logical_eq(tau_family, 1))) {
-                current_statement_begin__ = 53;
+                current_statement_begin__ = 81;
                 lp_accum__.add(normal_log(tau, get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)));
             } else if (as_bool(logical_eq(tau_family, 2))) {
-                current_statement_begin__ = 55;
+                current_statement_begin__ = 83;
                 lp_accum__.add(student_t_log(tau, get_base1(tau_param, 3, "tau_param", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)));
             } else if (as_bool(logical_eq(tau_family, 3))) {
-                current_statement_begin__ = 57;
+                current_statement_begin__ = 85;
                 lp_accum__.add(beta_log(((tau - get_base1(tau_bnd, 1, "tau_bnd", 1)) / (get_base1(tau_bnd, 2, "tau_bnd", 1) - get_base1(tau_bnd, 1, "tau_bnd", 1))), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)));
             } else if (as_bool(logical_eq(tau_family, 4))) {
-                current_statement_begin__ = 59;
+                current_statement_begin__ = 87;
                 lp_accum__.add(inv_gamma_log(tau, get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)));
+            } else if (as_bool(logical_eq(tau_family, 5))) {
+                current_statement_begin__ = 89;
+                lp_accum__.add(gamma_log(tau, get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)));
             }
-            current_statement_begin__ = 61;
+            current_statement_begin__ = 92;
             lp_accum__.add(normal_log(y, 0, stan::math::sqrt(add(SE2, pow(tau, 2)))));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());

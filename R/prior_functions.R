@@ -1,48 +1,58 @@
-describe_prior <- function (prior, digits = 3){
-
-  if (is.null(prior) || class(prior) != "prior")
-    return (NULL)
+describe_prior <- function(prior, digits = 3) {
+  if (is.null(prior) || class(prior) != "prior") {
+    return(NULL)
+  }
 
   family <- attr(prior, "family")
   param <- attr(prior, "param")
-  if (is.numeric(param))
+  if (is.numeric(param)) {
     param <- round(param, digits)
-  labels <- switch (family,
-                    "norm" = paste0("mean=", param[1], ", sd=", param[2]),
-                    "t" = paste0("location=", param[1], ", scale=", param[2], ", nu=", param[3]),
-                    "invgamma" =  paste0("shape=", param[1], ", scale=", param[2]),
-                    "beta" =  paste0("shape1=", param[1], ", shape2=", param[2]),
-                    "0" = paste0("H0: ", attr(prior, "label"), " = 0) "),
-                    "custom" = paste0("user-specified function"),
-                    stop ("Distribution not supported."))
+  }
+  labels <- switch(family,
+    "norm" = paste0("mean=", param[1], ", sd=", param[2]),
+    "t" = paste0("location=", param[1], ", scale=", param[2], ", nu=", param[3]),
+    "beta" =  paste0("shape1=", param[1], ", shape2=", param[2]),
+    "invgamma" =  paste0("shape=", param[1], ", scale=", param[2]),
+    "gamma" =  paste0("shape=", param[1], ", rate=", param[2]),
+    "0" = paste0("H0: ", attr(prior, "label"), " = 0) "),
+    "custom" = paste0("user-specified function"),
+    stop("Distribution not supported.")
+  )
 
-  if (family == "custom"){
+  if (family == "custom") {
     truncated <- TRUE
   } else {
     truncated <-
       default_lower(family) != attr(prior, "lower") ||
-      default_upper(family) != attr(prior, "upper")
+        default_upper(family) != attr(prior, "upper")
   }
   trunc <- switch(family,
-                  "beta" = ") rescaled to the interval",
-                  "0" = "",
-                  ifelse(truncated,
-                         ") truncated to the interval",
-                         ") with support on the interval"))
-  paste0("'", attr(prior, "family"), "' (", labels, trunc, " [",
-         attr(prior, "lower"), ",", attr(prior, "upper"), "].")
+    "beta" = ") rescaled to the interval",
+    "0" = "",
+    ifelse(truncated,
+      ") truncated to the interval",
+      ") with support on the interval"
+    )
+  )
+  paste0(
+    "'", attr(prior, "family"), "' (", labels, trunc, " [",
+    attr(prior, "lower"), ",", attr(prior, "upper"), "]."
+  )
 }
 
 
 #' @export
-print.prior <- function (x, ...){
-  cat("Prior density function (class='prior'):", describe_prior(x), "\n")
+print.prior <- function(x, digits = 3, ...) {
+  cat("Prior density function (class='prior'):",
+      describe_prior(x, digits = digits), "\n")
 }
 
 
 #' @importFrom LaplacesDemon rinvgamma rst dst pst qst
-rprior <- function (n, prior){
-  if (is.null(prior)) return (NULL)
+rprior <- function(n, prior) {
+  if (is.null(prior)) {
+    return(NULL)
+  }
 
   param <- attr(prior, "param")
   lower <- attr(prior, "lower")
@@ -51,38 +61,48 @@ rprior <- function (n, prior){
   truncated <- lower != default_lower(attr(prior, "family")) ||
     upper != default_upper(attr(prior, "family"))
 
-  if (truncated){
-    x <- switch (attr(prior, "family"),
+  # random number generation with truncation:
+  if (truncated) {
+    x <- switch(
+      EXPR = attr(prior, "family"),
+      "norm" = LaplacesDemon::rtrunc(n, spec = "norm", lower, upper,
+                                     mean = param[1], sd = param[2]),
+      "t" = LaplacesDemon::rtrunc(n, spec = "st", lower, upper,
+                                  mu = param[1], sigma = param[2], nu = param[3]),
+      "gamma" = LaplacesDemon::rtrunc(n, spec = "gamma", lower, upper,
+                                      shape = param[1], rate = param[2]),
 
-                 "norm" = LaplacesDemon::rtrunc(n, spec = "norm", lower, upper,
-                                                mean = param[1], sd = param[2]),
-                 "t" = LaplacesDemon::rtrunc(n, "st", lower, upper,
-                                             mu = param[1], sigma = param[2], nu = param[3]),
-                 # custom function for inverse gamma:
-                 "invgamma" = rtrunc(n, "invgamma", lower, upper,
-                                     shape = param[1], scale = param[2]),
-                 "beta" = lower + (upper - lower) * rbeta(n, param[1], param[2]),
-                 "0" = rep(0, n),
-                 "custom" = stop("Custom prior not supported."),
-                 stop("Distribution not supported.")
+      # custom function "rtrunc" for inverse gamma (not LaplacesDemon!)
+      "invgamma" = rtrunc(n, "invgamma", lower, upper,
+                          shape = param[1], scale = param[2]
+      ),
+
+      # scaled beta:
+      "beta" = lower + (upper - lower) * rbeta(n, param[1], param[2]),
+      "0" = rep(0, n),
+      "custom" = stop("Custom prior not supported."),
+      stop("Distribution not supported.")
     )
-  } else {
-    x <- switch (attr(prior, "family"),
 
-                 "norm" = rnorm(n, mean = param[1], sd = param[2]),
-                 "t" = rst(n, mu = param[1], sigma = param[2], nu = param[3]),
-                 "invgamma" = LaplacesDemon::rinvgamma(n, shape = param[1], scale = param[2]),
-                 "beta" = rbeta(n, param[1], param[2]),
-                 "0" = rep(0, n),
-                 "custom" = stop("Custom prior not supported."),
-                 stop("Distribution not supported.")
+    # random number generation without truncation:
+  } else {
+    x <- switch(
+      EXPR = attr(prior, "family"),
+      "norm" = rnorm(n, mean = param[1], sd = param[2]),
+      "t" = rst(n, mu = param[1], sigma = param[2], nu = param[3]),
+      "beta" = rbeta(n, param[1], param[2]),
+      "invgamma" = LaplacesDemon::rinvgamma(n, shape = param[1], scale = param[2]),
+      "gamma" = rgamma(n, shape = param[1], rate = param[2]),
+      "0" = rep(0, n),
+      "custom" = stop("Custom prior not supported."),
+      stop("Distribution not supported.")
     )
   }
   x
 }
 
 
-truncnorm_mean <- function(mean, sd, lower, upper){
+truncnorm_mean <- function(mean, sd, lower, upper) {
   alpha <- (lower - mean) / sd
   beta <- (upper - mean) / sd
   diff_cdf <- pnorm(beta) - pnorm(alpha)

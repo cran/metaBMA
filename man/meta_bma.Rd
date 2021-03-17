@@ -96,7 +96,7 @@ make the sampling in Stan more robust, for instance:
 \code{control=list(adapt_delta=.97)}.}
 }
 \description{
-Fits random- and fixed-effects meta-anayses and performs Bayesian model
+Fits random- and fixed-effects meta-analyses and performs Bayesian model
 averaging for H1 (d != 0) vs. H0 (d = 0).
 }
 \details{
@@ -104,7 +104,6 @@ Bayesian model averaging for four meta-analysis models: Fixed- vs.
 random-effects and H0 (\eqn{d=0}) vs. H1 (e.g., \eqn{d>0}).
 For a primer on Bayesian model-averaged meta-analysis,
 see Gronau, Heck, Berkhout, Haaf, and Wagenmakers (2020).
-
 
 By default, the log-marginal likelihood is computed by numerical integration
 (\code{logml="integrate"}). This is relatively fast and gives precise,
@@ -126,8 +125,9 @@ using Stan.
 data(towels)
 set.seed(123)
 mb <- meta_bma(logOR, SE, study, towels,
-               d = prior("norm", c(mean=0, sd=.3), lower=0),
-               tau = prior("invgamma", c(shape = 1, scale = 0.15)))
+  d = prior("norm", c(mean = 0, sd = .3), lower = 0),
+  tau = prior("invgamma", c(shape = 1, scale = 0.15))
+)
 mb
 plot_posterior(mb, "d")
 }

@@ -90,7 +90,7 @@ make the sampling in Stan more robust, for instance:
 }
 \description{
 Computes the Bayes factor for the hypothesis that the true study effects in a
-random-effects meta-anaysis are all positive or negative.
+random-effects meta-analysis are all positive or negative.
 }
 \details{
 Usually, in random-effects meta-analysis,the study-specific random-effects
@@ -121,7 +121,8 @@ approach, the default number of MCMC iterations for \code{meta_ordered} is
 data(towels)
 set.seed(123)
 mo <- meta_ordered(logOR, SE, study, towels,
-                   d = prior("norm", c(mean=0, sd=.3), lower=0))
+  d = prior("norm", c(mean = 0, sd = .3), lower = 0)
+)
 mo
 plot_posterior(mo)
 }

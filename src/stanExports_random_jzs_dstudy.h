@@ -59,37 +59,37 @@ stan::io::program_reader prog_reader__() {
     reader.add_event(42, 13, "restart", "model_random_jzs_dstudy");
     reader.add_event(42, 13, "include", "/prior/d_trunc.stan");
     reader.add_event(42, 0, "start", "/prior/d_trunc.stan");
-    reader.add_event(54, 12, "end", "/prior/d_trunc.stan");
-    reader.add_event(54, 14, "restart", "model_random_jzs_dstudy");
-    reader.add_event(54, 14, "include", "/prior/tau_trunc.stan");
-    reader.add_event(54, 0, "start", "/prior/tau_trunc.stan");
-    reader.add_event(66, 12, "end", "/prior/tau_trunc.stan");
-    reader.add_event(66, 15, "restart", "model_random_jzs_dstudy");
-    reader.add_event(69, 18, "include", "/prior/d_param.stan");
-    reader.add_event(69, 0, "start", "/prior/d_param.stan");
-    reader.add_event(70, 1, "end", "/prior/d_param.stan");
-    reader.add_event(70, 19, "restart", "model_random_jzs_dstudy");
-    reader.add_event(70, 19, "include", "/prior/tau_param.stan");
-    reader.add_event(70, 0, "start", "/prior/tau_param.stan");
-    reader.add_event(71, 1, "end", "/prior/tau_param.stan");
-    reader.add_event(71, 20, "restart", "model_random_jzs_dstudy");
-    reader.add_event(71, 20, "include", "/jzs/param.stan");
-    reader.add_event(71, 0, "start", "/jzs/param.stan");
-    reader.add_event(73, 2, "end", "/jzs/param.stan");
-    reader.add_event(73, 21, "restart", "model_random_jzs_dstudy");
-    reader.add_event(82, 30, "include", "/prior/d_target.stan");
-    reader.add_event(82, 0, "start", "/prior/d_target.stan");
-    reader.add_event(92, 10, "end", "/prior/d_target.stan");
-    reader.add_event(92, 31, "restart", "model_random_jzs_dstudy");
-    reader.add_event(92, 31, "include", "/prior/tau_target.stan");
-    reader.add_event(92, 0, "start", "/prior/tau_target.stan");
-    reader.add_event(102, 10, "end", "/prior/tau_target.stan");
-    reader.add_event(102, 32, "restart", "model_random_jzs_dstudy");
-    reader.add_event(102, 32, "include", "/jzs/target.stan");
-    reader.add_event(102, 0, "start", "/jzs/target.stan");
-    reader.add_event(108, 6, "end", "/jzs/target.stan");
-    reader.add_event(108, 33, "restart", "model_random_jzs_dstudy");
-    reader.add_event(113, 36, "end", "model_random_jzs_dstudy");
+    reader.add_event(82, 40, "end", "/prior/d_trunc.stan");
+    reader.add_event(82, 14, "restart", "model_random_jzs_dstudy");
+    reader.add_event(82, 14, "include", "/prior/tau_trunc.stan");
+    reader.add_event(82, 0, "start", "/prior/tau_trunc.stan");
+    reader.add_event(122, 40, "end", "/prior/tau_trunc.stan");
+    reader.add_event(122, 15, "restart", "model_random_jzs_dstudy");
+    reader.add_event(125, 18, "include", "/prior/d_param.stan");
+    reader.add_event(125, 0, "start", "/prior/d_param.stan");
+    reader.add_event(126, 1, "end", "/prior/d_param.stan");
+    reader.add_event(126, 19, "restart", "model_random_jzs_dstudy");
+    reader.add_event(126, 19, "include", "/prior/tau_param.stan");
+    reader.add_event(126, 0, "start", "/prior/tau_param.stan");
+    reader.add_event(127, 1, "end", "/prior/tau_param.stan");
+    reader.add_event(127, 20, "restart", "model_random_jzs_dstudy");
+    reader.add_event(127, 20, "include", "/jzs/param.stan");
+    reader.add_event(127, 0, "start", "/jzs/param.stan");
+    reader.add_event(129, 2, "end", "/jzs/param.stan");
+    reader.add_event(129, 21, "restart", "model_random_jzs_dstudy");
+    reader.add_event(138, 30, "include", "/prior/d_target.stan");
+    reader.add_event(138, 0, "start", "/prior/d_target.stan");
+    reader.add_event(150, 12, "end", "/prior/d_target.stan");
+    reader.add_event(150, 31, "restart", "model_random_jzs_dstudy");
+    reader.add_event(150, 31, "include", "/prior/tau_target.stan");
+    reader.add_event(150, 0, "start", "/prior/tau_target.stan");
+    reader.add_event(163, 13, "end", "/prior/tau_target.stan");
+    reader.add_event(163, 32, "restart", "model_random_jzs_dstudy");
+    reader.add_event(163, 32, "include", "/jzs/target.stan");
+    reader.add_event(163, 0, "start", "/jzs/target.stan");
+    reader.add_event(169, 6, "end", "/jzs/target.stan");
+    reader.add_event(169, 33, "restart", "model_random_jzs_dstudy");
+    reader.add_event(174, 36, "end", "model_random_jzs_dstudy");
     return reader;
 }
 #include <stan_meta_header.hpp>
@@ -339,49 +339,115 @@ public:
                                 "assigning variable SE2");
                 }
             }
-            current_statement_begin__ = 43;
+            current_statement_begin__ = 44;
             if (as_bool(logical_eq(d_family, 1))) {
-                current_statement_begin__ = 44;
-                stan::math::assign(d_const, -(log_diff_exp(normal_cdf_log(get_base1(d_bnd, 2, "d_bnd", 1), get_base1(d_param, 1, "d_param", 1), get_base1(d_param, 2, "d_param", 1)), normal_cdf_log(get_base1(d_bnd, 1, "d_bnd", 1), get_base1(d_param, 1, "d_param", 1), get_base1(d_param, 2, "d_param", 1)))));
+                current_statement_begin__ = 45;
+                if (as_bool((primitive_value(is_inf(get_base1(d_bnd, 1, "d_bnd", 1))) && primitive_value(is_inf(get_base1(d_bnd, 2, "d_bnd", 1)))))) {
+                    current_statement_begin__ = 46;
+                    stan::math::assign(d_const, 0);
+                } else {
+                    current_statement_begin__ = 48;
+                    stan::math::assign(d_const, -(log_diff_exp(normal_cdf_log(get_base1(d_bnd, 2, "d_bnd", 1), get_base1(d_param, 1, "d_param", 1), get_base1(d_param, 2, "d_param", 1)), normal_cdf_log(get_base1(d_bnd, 1, "d_bnd", 1), get_base1(d_param, 1, "d_param", 1), get_base1(d_param, 2, "d_param", 1)))));
+                }
             } else if (as_bool(logical_eq(d_family, 2))) {
-                current_statement_begin__ = 47;
-                stan::math::assign(d_const, -(log_diff_exp(student_t_cdf_log(get_base1(d_bnd, 2, "d_bnd", 1), get_base1(d_param, 3, "d_param", 1), get_base1(d_param, 1, "d_param", 1), get_base1(d_param, 2, "d_param", 1)), student_t_cdf_log(get_base1(d_bnd, 1, "d_bnd", 1), get_base1(d_param, 3, "d_param", 1), get_base1(d_param, 1, "d_param", 1), get_base1(d_param, 2, "d_param", 1)))));
+                current_statement_begin__ = 53;
+                if (as_bool((primitive_value(is_inf(get_base1(d_bnd, 1, "d_bnd", 1))) && primitive_value(is_inf(get_base1(d_bnd, 2, "d_bnd", 1)))))) {
+                    current_statement_begin__ = 54;
+                    stan::math::assign(d_const, 0);
+                } else {
+                    current_statement_begin__ = 56;
+                    stan::math::assign(d_const, -(log_diff_exp(student_t_cdf_log(get_base1(d_bnd, 2, "d_bnd", 1), get_base1(d_param, 3, "d_param", 1), get_base1(d_param, 1, "d_param", 1), get_base1(d_param, 2, "d_param", 1)), student_t_cdf_log(get_base1(d_bnd, 1, "d_bnd", 1), get_base1(d_param, 3, "d_param", 1), get_base1(d_param, 1, "d_param", 1), get_base1(d_param, 2, "d_param", 1)))));
+                }
             } else if (as_bool(logical_eq(d_family, 3))) {
-                current_statement_begin__ = 50;
-                stan::math::assign(d_const, -(stan::math::log((get_base1(d_bnd, 2, "d_bnd", 1) - get_base1(d_bnd, 1, "d_bnd", 1)))));
+                current_statement_begin__ = 61;
+                if (as_bool((primitive_value(logical_eq(get_base1(d_bnd, 1, "d_bnd", 1), 0)) && primitive_value(logical_eq(get_base1(d_bnd, 2, "d_bnd", 1), 1))))) {
+                    current_statement_begin__ = 62;
+                    stan::math::assign(d_const, 0);
+                } else {
+                    current_statement_begin__ = 64;
+                    stan::math::assign(d_const, -(stan::math::log((get_base1(d_bnd, 2, "d_bnd", 1) - get_base1(d_bnd, 1, "d_bnd", 1)))));
+                }
             } else if (as_bool(logical_eq(d_family, 4))) {
-                current_statement_begin__ = 52;
-                stan::math::assign(d_const, -(log_diff_exp(inv_gamma_cdf_log(get_base1(d_bnd, 2, "d_bnd", 1), get_base1(d_param, 1, "d_param", 1), get_base1(d_param, 2, "d_param", 1)), inv_gamma_cdf_log(get_base1(d_bnd, 1, "d_bnd", 1), get_base1(d_param, 1, "d_param", 1), get_base1(d_param, 2, "d_param", 1)))));
+                current_statement_begin__ = 68;
+                if (as_bool((primitive_value(logical_eq(get_base1(d_bnd, 1, "d_bnd", 1), 0)) && primitive_value(is_inf(get_base1(d_bnd, 2, "d_bnd", 1)))))) {
+                    current_statement_begin__ = 69;
+                    stan::math::assign(d_const, 0);
+                } else {
+                    current_statement_begin__ = 71;
+                    stan::math::assign(d_const, -(log_diff_exp(inv_gamma_cdf_log(get_base1(d_bnd, 2, "d_bnd", 1), get_base1(d_param, 1, "d_param", 1), get_base1(d_param, 2, "d_param", 1)), inv_gamma_cdf_log(get_base1(d_bnd, 1, "d_bnd", 1), get_base1(d_param, 1, "d_param", 1), get_base1(d_param, 2, "d_param", 1)))));
+                }
+            } else if (as_bool(logical_eq(d_family, 5))) {
+                current_statement_begin__ = 76;
+                if (as_bool((primitive_value(logical_eq(get_base1(d_bnd, 1, "d_bnd", 1), 0)) && primitive_value(is_inf(get_base1(d_bnd, 2, "d_bnd", 1)))))) {
+                    current_statement_begin__ = 77;
+                    stan::math::assign(d_const, 0);
+                } else {
+                    current_statement_begin__ = 79;
+                    stan::math::assign(d_const, -(log_diff_exp(gamma_cdf_log(get_base1(d_bnd, 2, "d_bnd", 1), get_base1(d_param, 1, "d_param", 1), get_base1(d_param, 2, "d_param", 1)), gamma_cdf_log(get_base1(d_bnd, 1, "d_bnd", 1), get_base1(d_param, 1, "d_param", 1), get_base1(d_param, 2, "d_param", 1)))));
+                }
             }
-            current_statement_begin__ = 55;
+            current_statement_begin__ = 84;
             if (as_bool(logical_eq(tau_family, 1))) {
-                current_statement_begin__ = 56;
-                stan::math::assign(tau_const, -(log_diff_exp(normal_cdf_log(get_base1(tau_bnd, 2, "tau_bnd", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)), normal_cdf_log(get_base1(tau_bnd, 1, "tau_bnd", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)))));
+                current_statement_begin__ = 85;
+                if (as_bool((primitive_value(is_inf(get_base1(tau_bnd, 1, "tau_bnd", 1))) && primitive_value(is_inf(get_base1(tau_bnd, 2, "tau_bnd", 1)))))) {
+                    current_statement_begin__ = 86;
+                    stan::math::assign(tau_const, 0);
+                } else {
+                    current_statement_begin__ = 88;
+                    stan::math::assign(tau_const, -(log_diff_exp(normal_cdf_log(get_base1(tau_bnd, 2, "tau_bnd", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)), normal_cdf_log(get_base1(tau_bnd, 1, "tau_bnd", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)))));
+                }
             } else if (as_bool(logical_eq(tau_family, 2))) {
-                current_statement_begin__ = 59;
-                stan::math::assign(tau_const, -(log_diff_exp(student_t_cdf_log(get_base1(tau_bnd, 2, "tau_bnd", 1), get_base1(tau_param, 3, "tau_param", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)), student_t_cdf_log(get_base1(tau_bnd, 1, "tau_bnd", 1), get_base1(tau_param, 3, "tau_param", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)))));
+                current_statement_begin__ = 93;
+                if (as_bool((primitive_value(is_inf(get_base1(tau_bnd, 1, "tau_bnd", 1))) && primitive_value(is_inf(get_base1(tau_bnd, 2, "tau_bnd", 1)))))) {
+                    current_statement_begin__ = 94;
+                    stan::math::assign(tau_const, 0);
+                } else {
+                    current_statement_begin__ = 96;
+                    stan::math::assign(tau_const, -(log_diff_exp(student_t_cdf_log(get_base1(tau_bnd, 2, "tau_bnd", 1), get_base1(tau_param, 3, "tau_param", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)), student_t_cdf_log(get_base1(tau_bnd, 1, "tau_bnd", 1), get_base1(tau_param, 3, "tau_param", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)))));
+                }
             } else if (as_bool(logical_eq(tau_family, 3))) {
-                current_statement_begin__ = 62;
-                stan::math::assign(tau_const, -(stan::math::log((get_base1(tau_bnd, 2, "tau_bnd", 1) - get_base1(tau_bnd, 1, "tau_bnd", 1)))));
+                current_statement_begin__ = 101;
+                if (as_bool((primitive_value(logical_eq(get_base1(tau_bnd, 1, "tau_bnd", 1), 0)) && primitive_value(logical_eq(get_base1(tau_bnd, 2, "tau_bnd", 1), 1))))) {
+                    current_statement_begin__ = 102;
+                    stan::math::assign(tau_const, 0);
+                } else {
+                    current_statement_begin__ = 104;
+                    stan::math::assign(tau_const, -(stan::math::log((get_base1(tau_bnd, 2, "tau_bnd", 1) - get_base1(tau_bnd, 1, "tau_bnd", 1)))));
+                }
             } else if (as_bool(logical_eq(tau_family, 4))) {
-                current_statement_begin__ = 64;
-                stan::math::assign(tau_const, -(log_diff_exp(inv_gamma_cdf_log(get_base1(tau_bnd, 2, "tau_bnd", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)), inv_gamma_cdf_log(get_base1(tau_bnd, 1, "tau_bnd", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)))));
+                current_statement_begin__ = 108;
+                if (as_bool((primitive_value(logical_eq(get_base1(tau_bnd, 1, "tau_bnd", 1), 0)) && primitive_value(is_inf(get_base1(tau_bnd, 2, "tau_bnd", 1)))))) {
+                    current_statement_begin__ = 109;
+                    stan::math::assign(tau_const, 0);
+                } else {
+                    current_statement_begin__ = 111;
+                    stan::math::assign(tau_const, -(log_diff_exp(inv_gamma_cdf_log(get_base1(tau_bnd, 2, "tau_bnd", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)), inv_gamma_cdf_log(get_base1(tau_bnd, 1, "tau_bnd", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)))));
+                }
+            } else if (as_bool(logical_eq(tau_family, 5))) {
+                current_statement_begin__ = 116;
+                if (as_bool((primitive_value(logical_eq(get_base1(tau_bnd, 1, "tau_bnd", 1), 0)) && primitive_value(is_inf(get_base1(tau_bnd, 2, "tau_bnd", 1)))))) {
+                    current_statement_begin__ = 117;
+                    stan::math::assign(tau_const, 0);
+                } else {
+                    current_statement_begin__ = 119;
+                    stan::math::assign(tau_const, -(log_diff_exp(gamma_cdf_log(get_base1(tau_bnd, 2, "tau_bnd", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)), gamma_cdf_log(get_base1(tau_bnd, 1, "tau_bnd", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)))));
+                }
             }
             // validate transformed data
             // validate, set parameter ranges
             num_params_r__ = 0U;
             param_ranges_i__.clear();
-            current_statement_begin__ = 70;
+            current_statement_begin__ = 126;
             num_params_r__ += 1;
-            current_statement_begin__ = 71;
+            current_statement_begin__ = 127;
             num_params_r__ += 1;
-            current_statement_begin__ = 72;
+            current_statement_begin__ = 128;
             validate_non_negative_index("beta", "sum(P)", sum(P));
             num_params_r__ += sum(P);
-            current_statement_begin__ = 73;
+            current_statement_begin__ = 129;
             validate_non_negative_index("g", "B", B);
             num_params_r__ += B;
-            current_statement_begin__ = 74;
+            current_statement_begin__ = 130;
             validate_non_negative_index("delta", "N", N);
             num_params_r__ += N;
         } catch (const std::exception& e) {
@@ -401,7 +467,7 @@ public:
         (void) pos__; // dummy call to supress warning
         std::vector<double> vals_r__;
         std::vector<int> vals_i__;
-        current_statement_begin__ = 70;
+        current_statement_begin__ = 126;
         if (!(context__.contains_r("d")))
             stan::lang::rethrow_located(std::runtime_error(std::string("Variable d missing")), current_statement_begin__, prog_reader__());
         vals_r__ = context__.vals_r("d");
@@ -414,7 +480,7 @@ public:
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(std::runtime_error(std::string("Error transforming variable d: ") + e.what()), current_statement_begin__, prog_reader__());
         }
-        current_statement_begin__ = 71;
+        current_statement_begin__ = 127;
         if (!(context__.contains_r("tau")))
             stan::lang::rethrow_located(std::runtime_error(std::string("Variable tau missing")), current_statement_begin__, prog_reader__());
         vals_r__ = context__.vals_r("tau");
@@ -427,7 +493,7 @@ public:
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(std::runtime_error(std::string("Error transforming variable tau: ") + e.what()), current_statement_begin__, prog_reader__());
         }
-        current_statement_begin__ = 72;
+        current_statement_begin__ = 128;
         if (!(context__.contains_r("beta")))
             stan::lang::rethrow_located(std::runtime_error(std::string("Variable beta missing")), current_statement_begin__, prog_reader__());
         vals_r__ = context__.vals_r("beta");
@@ -444,7 +510,7 @@ public:
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(std::runtime_error(std::string("Error transforming variable beta: ") + e.what()), current_statement_begin__, prog_reader__());
         }
-        current_statement_begin__ = 73;
+        current_statement_begin__ = 129;
         if (!(context__.contains_r("g")))
             stan::lang::rethrow_located(std::runtime_error(std::string("Variable g missing")), current_statement_begin__, prog_reader__());
         vals_r__ = context__.vals_r("g");
@@ -461,7 +527,7 @@ public:
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(std::runtime_error(std::string("Error transforming variable g: ") + e.what()), current_statement_begin__, prog_reader__());
         }
-        current_statement_begin__ = 74;
+        current_statement_begin__ = 130;
         if (!(context__.contains_r("delta")))
             stan::lang::rethrow_located(std::runtime_error(std::string("Variable delta missing")), current_statement_begin__, prog_reader__());
         vals_r__ = context__.vals_r("delta");
@@ -503,35 +569,35 @@ public:
         try {
             stan::io::reader<local_scalar_t__> in__(params_r__, params_i__);
             // model parameters
-            current_statement_begin__ = 70;
+            current_statement_begin__ = 126;
             local_scalar_t__ d;
             (void) d;  // dummy to suppress unused var warning
             if (jacobian__)
                 d = in__.scalar_lub_constrain(get_base1(d_bnd, 1, "d_bnd", 1), get_base1(d_bnd, 2, "d_bnd", 1), lp__);
             else
                 d = in__.scalar_lub_constrain(get_base1(d_bnd, 1, "d_bnd", 1), get_base1(d_bnd, 2, "d_bnd", 1));
-            current_statement_begin__ = 71;
+            current_statement_begin__ = 127;
             local_scalar_t__ tau;
             (void) tau;  // dummy to suppress unused var warning
             if (jacobian__)
                 tau = in__.scalar_lub_constrain(get_base1(tau_bnd, 1, "tau_bnd", 1), get_base1(tau_bnd, 2, "tau_bnd", 1), lp__);
             else
                 tau = in__.scalar_lub_constrain(get_base1(tau_bnd, 1, "tau_bnd", 1), get_base1(tau_bnd, 2, "tau_bnd", 1));
-            current_statement_begin__ = 72;
+            current_statement_begin__ = 128;
             Eigen::Matrix<local_scalar_t__, Eigen::Dynamic, 1> beta;
             (void) beta;  // dummy to suppress unused var warning
             if (jacobian__)
                 beta = in__.vector_constrain(sum(P), lp__);
             else
                 beta = in__.vector_constrain(sum(P));
-            current_statement_begin__ = 73;
+            current_statement_begin__ = 129;
             Eigen::Matrix<local_scalar_t__, Eigen::Dynamic, 1> g;
             (void) g;  // dummy to suppress unused var warning
             if (jacobian__)
                 g = in__.vector_lb_constrain(0, B, lp__);
             else
                 g = in__.vector_lb_constrain(0, B);
-            current_statement_begin__ = 74;
+            current_statement_begin__ = 130;
             Eigen::Matrix<local_scalar_t__, Eigen::Dynamic, 1> delta;
             (void) delta;  // dummy to suppress unused var warning
             if (jacobian__)
@@ -539,18 +605,18 @@ public:
             else
                 delta = in__.vector_constrain(N);
             // transformed parameters
-            current_statement_begin__ = 78;
+            current_statement_begin__ = 134;
             validate_non_negative_index("dstudy", "N", N);
             Eigen::Matrix<local_scalar_t__, Eigen::Dynamic, 1> dstudy(N);
             stan::math::initialize(dstudy, DUMMY_VAR__);
             stan::math::fill(dstudy, DUMMY_VAR__);
             // transformed parameters block statements
-            current_statement_begin__ = 79;
+            current_statement_begin__ = 135;
             stan::math::assign(dstudy, add(add(d, multiply(X, beta)), multiply(tau, delta)));
             // validate transformed parameters
             const char* function__ = "validate transformed params";
             (void) function__;  // dummy to suppress unused var warning
-            current_statement_begin__ = 78;
+            current_statement_begin__ = 134;
             size_t dstudy_j_1_max__ = N;
             for (size_t j_1__ = 0; j_1__ < dstudy_j_1_max__; ++j_1__) {
                 if (stan::math::is_uninitialized(dstudy(j_1__))) {
@@ -560,48 +626,54 @@ public:
                 }
             }
             // model body
-            current_statement_begin__ = 83;
+            current_statement_begin__ = 139;
             lp_accum__.add(d_const);
-            current_statement_begin__ = 84;
+            current_statement_begin__ = 140;
             if (as_bool(logical_eq(d_family, 1))) {
-                current_statement_begin__ = 85;
+                current_statement_begin__ = 141;
                 lp_accum__.add(normal_log(d, get_base1(d_param, 1, "d_param", 1), get_base1(d_param, 2, "d_param", 1)));
             } else if (as_bool(logical_eq(d_family, 2))) {
-                current_statement_begin__ = 87;
+                current_statement_begin__ = 143;
                 lp_accum__.add(student_t_log(d, get_base1(d_param, 3, "d_param", 1), get_base1(d_param, 1, "d_param", 1), get_base1(d_param, 2, "d_param", 1)));
             } else if (as_bool(logical_eq(d_family, 3))) {
-                current_statement_begin__ = 89;
+                current_statement_begin__ = 145;
                 lp_accum__.add(beta_log(((d - get_base1(d_bnd, 1, "d_bnd", 1)) / (get_base1(d_bnd, 2, "d_bnd", 1) - get_base1(d_bnd, 1, "d_bnd", 1))), get_base1(d_param, 1, "d_param", 1), get_base1(d_param, 2, "d_param", 1)));
             } else if (as_bool(logical_eq(d_family, 4))) {
-                current_statement_begin__ = 91;
+                current_statement_begin__ = 147;
                 lp_accum__.add(inv_gamma_log(d, get_base1(d_param, 1, "d_param", 1), get_base1(d_param, 2, "d_param", 1)));
+            } else if (as_bool(logical_eq(d_family, 5))) {
+                current_statement_begin__ = 149;
+                lp_accum__.add(gamma_log(d, get_base1(d_param, 1, "d_param", 1), get_base1(d_param, 2, "d_param", 1)));
             }
-            current_statement_begin__ = 93;
+            current_statement_begin__ = 151;
             lp_accum__.add(tau_const);
-            current_statement_begin__ = 94;
+            current_statement_begin__ = 152;
             if (as_bool(logical_eq(tau_family, 1))) {
-                current_statement_begin__ = 95;
+                current_statement_begin__ = 153;
                 lp_accum__.add(normal_log(tau, get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)));
             } else if (as_bool(logical_eq(tau_family, 2))) {
-                current_statement_begin__ = 97;
+                current_statement_begin__ = 155;
                 lp_accum__.add(student_t_log(tau, get_base1(tau_param, 3, "tau_param", 1), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)));
             } else if (as_bool(logical_eq(tau_family, 3))) {
-                current_statement_begin__ = 99;
+                current_statement_begin__ = 157;
                 lp_accum__.add(beta_log(((tau - get_base1(tau_bnd, 1, "tau_bnd", 1)) / (get_base1(tau_bnd, 2, "tau_bnd", 1) - get_base1(tau_bnd, 1, "tau_bnd", 1))), get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)));
             } else if (as_bool(logical_eq(tau_family, 4))) {
-                current_statement_begin__ = 101;
+                current_statement_begin__ = 159;
                 lp_accum__.add(inv_gamma_log(tau, get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)));
+            } else if (as_bool(logical_eq(tau_family, 5))) {
+                current_statement_begin__ = 161;
+                lp_accum__.add(gamma_log(tau, get_base1(tau_param, 1, "tau_param", 1), get_base1(tau_param, 2, "tau_param", 1)));
             }
-            current_statement_begin__ = 103;
+            current_statement_begin__ = 164;
             for (int b = 1; b <= B; ++b) {
-                current_statement_begin__ = 104;
+                current_statement_begin__ = 165;
                 lp_accum__.add(inv_gamma_log(get_base1(g, b, "g", 1), .5, (pow(get_base1(rscale, b, "rscale", 1), 2) / 2.)));
-                current_statement_begin__ = 105;
+                current_statement_begin__ = 166;
                 lp_accum__.add(multi_normal_cholesky_log(stan::model::rvalue(beta, stan::model::cons_list(stan::model::index_min_max(get_base1(get_base1(b_idx, b, "b_idx", 1), 1, "b_idx", 2), get_base1(get_base1(b_idx, b, "b_idx", 1), 2, "b_idx", 2)), stan::model::nil_index_list()), "beta"), rep_vector(0, get_base1(P, b, "P", 1)), multiply(stan::math::sqrt(get_base1(g, b, "g", 1)), stan::model::rvalue(L, stan::model::cons_list(stan::model::index_uni(b), stan::model::cons_list(stan::model::index_min_max(1, get_base1(P, b, "P", 1)), stan::model::cons_list(stan::model::index_min_max(1, get_base1(P, b, "P", 1)), stan::model::nil_index_list()))), "L"))));
             }
-            current_statement_begin__ = 109;
+            current_statement_begin__ = 170;
             lp_accum__.add(normal_log(delta, 0, 1));
-            current_statement_begin__ = 110;
+            current_statement_begin__ = 171;
             lp_accum__.add(normal_log(y, dstudy, SE));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
@@ -691,13 +763,13 @@ public:
         if (!include_tparams__ && !include_gqs__) return;
         try {
             // declare and define transformed parameters
-            current_statement_begin__ = 78;
+            current_statement_begin__ = 134;
             validate_non_negative_index("dstudy", "N", N);
             Eigen::Matrix<double, Eigen::Dynamic, 1> dstudy(N);
             stan::math::initialize(dstudy, DUMMY_VAR__);
             stan::math::fill(dstudy, DUMMY_VAR__);
             // do transformed parameters statements
-            current_statement_begin__ = 79;
+            current_statement_begin__ = 135;
             stan::math::assign(dstudy, add(add(d, multiply(X, beta)), multiply(tau, delta)));
             if (!include_gqs__ && !include_tparams__) return;
             // validate transformed parameters
