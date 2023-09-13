@@ -22,51 +22,87 @@
 #' mf <- meta_fixed(logOR, SE, study, towels)
 #' plot_forest(mf, mar = c(4.5, 20, 4, .2), xlab = "Log Odds Ratio")
 #' @export
-plot_forest <- function(meta, from, to, shrinked = "random",
-                        summary = c("mean", "hpd"), mar = c(4.5, 12, 4, .3),
-                        cex.axis = 1, ...) {
+plot_forest <- function(
+    meta,
+    from,
+    to,
+    shrinked = "random",
+    summary = c("mean", "hpd"),
+    mar = c(4.5, 12, 4, .3),
+    cex.axis = 1,
+    ...
+) {
   par(mar = mar)
   UseMethod("plot_forest", meta)
 }
 
+
 #' @export
-plot_forest.meta_fixed <- function(meta, from, to, shrinked = "random",
-                                   summary = c("mean", "hpd"),
-                                   mar = c(4.5, 12, 4, .3),
-                                   cex.axis = 1, ...) {
-  plot_forest.default(meta, from, to,
+plot_forest.meta_fixed <- function(
+    meta,
+    from,
+    to,
+    shrinked = "random",
+    summary = c("mean", "hpd"),
+    mar = c(4.5, 12, 4, .3),
+    cex.axis = 1,
+    main = "Fixed-Effects Meta-Analysis",
+    ...
+) {
+  plot_forest.default(
+    meta,
+    from,
+    to,
     summary = summary,
-    shrinked = "", main = "Fixed-Effects Meta-Analysis",
-    cex.axis = cex.axis, ...
+    shrinked = "",
+    main = main,
+    cex.axis = cex.axis,
+    ...
   )
   axis(2, -1, "Total", las = 1, tick = FALSE, cex.axis = cex.axis)
   par(mar = c(5.1, 4.1, 4.1, 2.1))
 }
 
+
 #' @export
-plot_forest.meta_random <- function(meta, from, to, shrinked = "random",
-                                    summary = c("mean", "hpd"),
-                                    mar = c(4.5, 12, 4, .3),
-                                    cex.axis = 1, ...) {
+plot_forest.meta_random <- function(
+    meta,
+    from,
+    to,
+    shrinked = "random",
+    summary = c("mean", "hpd"),
+    mar = c(4.5, 12, 4, .3),
+    cex.axis = 1,
+    main = "Random-Effects Meta-Analysis",
+    ...
+) {
   plot_forest.default(meta,
     from = from, to = to, summary = summary,
     shrinked = shrinked, cex.axis = cex.axis,
-    main = "Random-Effects Meta-Analysis", ...
+    main = main, ...
   )
   axis(2, -1, "Total", las = 1, tick = FALSE, cex.axis = cex.axis)
   par(mar = c(5.1, 4.1, 4.1, 2.1))
 }
 
+
 #' @export
-plot_forest.meta_bma <- function(meta, from, to, shrinked = "random",
-                                 summary = c("mean", "hpd"),
-                                 mar = c(4.5, 12, 4, .3),
-                                 cex.axis = 1, ...) {
+plot_forest.meta_bma <- function(
+    meta,
+    from,
+    to,
+    shrinked = "random",
+    summary = c("mean", "hpd"),
+    mar = c(4.5, 12, 4, .3),
+    cex.axis = 1,
+    main = "Meta-Analysis with Model-Averaging",
+    ...
+) {
   meta$data <- meta$meta[[1]]$data
   plot_forest.default(meta,
     from = from, to = to, summary = summary,
     shrinked = shrinked, cex.axis = cex.axis,
-    main = "Meta-Analysis with Model-Averaging", ...
+    main = main, ...
   )
   labels <- rownames(meta$estimates)
   axis(2, -seq_along(labels), labels, las = 1, tick = TRUE, cex.axis = cex.axis)
@@ -76,10 +112,17 @@ plot_forest.meta_bma <- function(meta, from, to, shrinked = "random",
 
 # ' @rdname plot_posterior
 #' @export
-plot_forest.default <- function(meta, from, to, shrinked = "random",
-                                summary = c("mean", "hpd"),
-                                mar = c(4.5, 12, 4, .3),
-                                cex.axis = 1, ...) {
+plot_forest.default <- function(
+    meta,
+    from,
+    to,
+    shrinked = "random",
+    summary = c("mean", "hpd"),
+    mar = c(4.5, 12, 4, .3),
+    cex.axis = 1,
+    main = "Meta-Analysis",
+    ...
+) {
   ci <- .95
 
   n.studies <- length(meta$data$y)
@@ -92,9 +135,9 @@ plot_forest.default <- function(meta, from, to, shrinked = "random",
   upper <- meta$data$y + qnorm((ci + 1) / 2) * meta$data$SE
 
   stanfit_dstudy <- ss <- NULL
-  if (class(meta) == "meta_bma") {
+  if (inherits(meta, "meta_bma")) {
     stanfit_dstudy <- meta$meta[[shrinked]]$stanfit_dstudy
-  } else if (class(meta) == "meta_random" && shrinked != "") {
+  } else if (inherits(meta, "meta_random") && shrinked != "") {
     stanfit_dstudy <- meta$stanfit_dstudy
   }
   if (!is.null(stanfit_dstudy)) {
@@ -124,10 +167,17 @@ plot_forest.default <- function(meta, from, to, shrinked = "random",
 
   Effect <- -1000
   plot(
-    x = Effect, y = -100, xlim = range(xxx),
-    yaxt = "n", ylab = "", las = 1,
+    x = Effect,
+    y = -100,
+    xlim = range(xxx),
+    yaxt = "n",
+    ylab = "",
+    las = 1,
     ylim = c(-n.ests, n.studies),
-    bty = "n", ...
+    bty = "n",
+    cex.axis = cex.axis,
+    main = main,
+    ...
   )
   abline(v = 0, col = "darkgray", lty = "dashed")
   axis(2, n.studies:1, meta$data$labels, las = 1, cex.axis = cex.axis)

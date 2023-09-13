@@ -1,5 +1,9 @@
-describe_prior <- function(prior, digits = 3) {
-  if (is.null(prior) || class(prior) != "prior") {
+describe_prior <- function(
+    prior,
+    digits = 3
+) {
+
+  if (is.null(prior) || !inherits(prior, "prior")) {
     return(NULL)
   }
 
@@ -42,14 +46,22 @@ describe_prior <- function(prior, digits = 3) {
 
 
 #' @export
-print.prior <- function(x, digits = 3, ...) {
+print.prior <- function(
+    x,
+    digits = 3,
+    ...
+) {
   cat("Prior density function (class='prior'):",
       describe_prior(x, digits = digits), "\n")
 }
 
 
 #' @importFrom LaplacesDemon rinvgamma rst dst pst qst
-rprior <- function(n, prior) {
+rprior <- function(
+    n,
+    prior
+) {
+
   if (is.null(prior)) {
     return(NULL)
   }
@@ -102,7 +114,12 @@ rprior <- function(n, prior) {
 }
 
 
-truncnorm_mean <- function(mean, sd, lower, upper) {
+truncnorm_mean <- function(
+    mean,
+    sd,
+    lower,
+    upper
+) {
   alpha <- (lower - mean) / sd
   beta <- (upper - mean) / sd
   diff_cdf <- pnorm(beta) - pnorm(alpha)
@@ -110,7 +127,10 @@ truncnorm_mean <- function(mean, sd, lower, upper) {
   mean + sd * diff_pdf / diff_cdf
 }
 
-log_diff_exp <- function(logx1, logx2) {
+log_diff_exp <- function(
+    logx1,
+    logx2
+) {
   c <- logx1
   log(exp(logx1 - c) - exp(logx2 - c)) + c
 }
@@ -124,13 +144,13 @@ log_diff_exp <- function(logx1, logx2) {
 #
 # xx <- seq(max(lb, 0), min(ub, 3), length.out = 201)
 # cnt <- 1
-# while (px(xx[1]) > .002){
+# while (px(xx[1]) > .002) {
 #   cnt <- cnt + 1
 #   newx <- seq(min(xx)-1, min(xx), length.out = 41)
 #   xx <- c(newx, xx)
 # }
 # cnt <- 1
-# while (px(max(xx)) < .998){
+# while (px(max(xx)) < .998) {
 #   cnt <- cnt + 1
 #   newx <- seq(from = max(xx), to = max(xx)+1, length.out = 41)
 #   xx <- c(xx, newx)
@@ -138,7 +158,7 @@ log_diff_exp <- function(logx1, logx2) {
 # dx <- prior(xx)
 # px <- cumsum(dx)
 # qdens <- splinefun(px, xx)
-# length.interval <- function (start){
+# length.interval <- function (start) {
 #   qdens(start+ci)-qdens(start)
 # }
 # oo <- optim((1-ci)/2, length.interval, method = "L-BFGS-B",

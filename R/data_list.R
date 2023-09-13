@@ -1,5 +1,13 @@
 ### Make data-list structure and check data
-data_list <- function(model, y, SE, labels, data, args) {
+data_list <- function(
+    model,
+    y,
+    SE,
+    labels,
+    data,
+    args
+) {
+
   model <- match.arg(model, c("random", "fixed", "random_ordered"))
 
   if (!missing(data) && is.list(data)) {
@@ -20,7 +28,7 @@ data_list <- function(model, y, SE, labels, data, args) {
     data <- NULL
   }
 
-  if (class(y) == "formula") {
+  if (inherits(y, "formula")) {
     mf <- model.frame(y, data)
     y <- model.response(mf)
     X <- model.matrix(attr(mf, "terms"), mf)

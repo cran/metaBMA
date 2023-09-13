@@ -24,8 +24,14 @@
 #' plot_forest(averaged, mar = c(4.5, 20, 4, .3))
 #' }
 #' @export
-bma <- function(meta, prior = 1, parameter = "d", summarize = "integrate", ci = .95,
-                rel.tol = .Machine$double.eps^0.5) {
+bma <- function(
+    meta,
+    prior = 1,
+    parameter = "d",
+    summarize = "integrate",
+    ci = .95,
+    rel.tol = .Machine$double.eps^0.5
+) {
 
   # stopifnot(parameter %in% c("d", "tau"))
   if (parameter == "tau") {
@@ -86,7 +92,7 @@ bma <- function(meta, prior = 1, parameter = "d", summarize = "integrate", ci = 
 
   ################ NOT WORKING WELL: SAMPLING-BASED MODEL AVERAGING
   ################ ----> averaged posterior may not be a convex combination of fixed-/random effects
-  # if (summarize == "integrate"){
+  # if (summarize == "integrate") {
   # } else {
   #   samples <- lapply(meta[select_models], function(m) extract(m$stanfit, parameter)[[parameter]])
   #   maxiter <- sapply(samples, length)
